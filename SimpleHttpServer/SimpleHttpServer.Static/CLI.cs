@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SimpleHttpServer.CLI
+﻿namespace SimpleHttpServer.Static
 {
     public class CLI
     {

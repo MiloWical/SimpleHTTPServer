@@ -1,4 +1,4 @@
-﻿namespace SimpleHttpServer.CLI
+﻿namespace SimpleHttpServer.Static
 {
     using System;
     using System.IO;
