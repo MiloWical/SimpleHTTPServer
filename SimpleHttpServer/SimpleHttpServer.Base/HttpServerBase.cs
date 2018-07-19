@@ -29,32 +29,6 @@
 
                 var context = server.GetContext();
 
-                Console.WriteLine("Request:\n--------");
-
-                using (var inStreamReader = new StreamReader(context.Request.InputStream))
-                {
-                    Console.WriteLine(context.Request.HttpMethod + " " + context.Request.RawUrl);
-
-                    foreach (var header in context.Request.Headers.AllKeys)
-                    {
-                        var values = context.Request.Headers.GetValues(header);
-
-                        if (values == null || values.Length <= 0) continue;
-
-                        Console.Write(header + ": ");
-
-                        for (var i = 0; i < values.Length - 1; i++) Console.Write(values[i] + ";");
-
-                        Console.Write(values[values.Length - 1]);
-
-                        Console.WriteLine();
-                    }
-
-                    Console.WriteLine("\n");
-                    Console.WriteLine(inStreamReader.ReadToEnd());
-                }
-
-                //const string responseString = "<HTML><BODY>Transaction Successful.</BODY></HTML>";
                 var responseString = ProcessRequest(context.Request);
 
                 Console.WriteLine("\n\nSending Response:\n-----------------\n" + responseString + "\n");
