@@ -1,0 +1,48 @@
+﻿####### BEGIN BUILD CONTAINER DEFINITION #######
+
+# Full-size container will all of the .NET Core dependencies
+FROM microsoft/dotnet:2.1-sdk as builder  
+
+# Build the directory structure
+RUN mkdir -p /_src/Reference && mkdir -p /_src/app
+
+# Change to the container-local app directory
+WORKDIR /_src/app
+
+# Copy the references .DLLs and .csproj file
+COPY ./Reference ../Reference
+COPY SimpleHttpServer.Static.Metric.csproj .
+
+# Restore NuGet packages
+RUN dotnet restore ./SimpleHttpServer.Static.Metric.csproj 
+
+# Copy the other source files to the container
+COPY . .
+
+# Build as Release (smaller size) and publish to the /_src/app/bin directory
+RUN dotnet publish -c release -o bin 
+
+####### END BUILD CONTAINER DEFINITION #######
+
+####### BEGIN RUNTIME CONTAINER DEFINITION #######
+
+# Smaller Alpine runtime container (preview version)
+FROM microsoft/dotnet:2.1-runtime-alpine
+
+# Create the /_bin/app directory to house the built code
+RUN mkdir -p /_bin/app
+
+# Change to the container-local binaries location
+WORKDIR /_bin/app
+
+# Copy the out of the build process in the build container to the
+# binaries location in the runtime container
+COPY --from=builder /_src/app/bin .
+
+# Let people connect to the container-local port 80 via TCP
+EXPOSE 80/tcp
+
+# Run the server program to process transactions
+CMD ["dotnet", "./SimpleHttpServer.Static.Metric.dll"]  
+
+####### END RUNTIME CONTAINER DEFINITION #######

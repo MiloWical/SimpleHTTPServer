@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,7 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleHttpServer.Static\SimpleHttpServer.Static.csproj" />
+    <Folder Include="Reference\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SimpleHttpServer.Base">
+      <HintPath>Reference\SimpleHttpServer.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleHttpServer.Static">
+      <HintPath>Reference\SimpleHttpServer.Static.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
