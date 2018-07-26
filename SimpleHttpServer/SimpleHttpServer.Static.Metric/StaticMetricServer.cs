@@ -16,10 +16,16 @@
             _metricProcessor = new OperationProcessor();
             _totalRequests = 0;
 
+            //"rpm" = requests per minute
+            _metricProcessor.AddOperation("rpm",
+                httpListenerContext =>
+                    (_totalRequests / (DateTime.Now - _startTime).TotalMinutes)
+                    .ToString(CultureInfo.InvariantCulture));
+
             //"rps" = requests per second
             _metricProcessor.AddOperation("rps",
                 httpListenerContext =>
-                    ((double) _totalRequests / (DateTime.Now - _startTime).Milliseconds)
+                    (_totalRequests / (DateTime.Now - _startTime).TotalSeconds)
                     .ToString(CultureInfo.InvariantCulture));
         }
 
@@ -43,7 +49,7 @@
                 return ResponseString;
 
             if(urlSegments[processingStartIndex].ToLower() == OperationProcessor.MetricString)
-                result = _metricProcessor.ProcessOperation(urlSegments[processingStartIndex + 1], httpListenerRequest, ResponseString);
+                result = _metricProcessor.ProcessOperation(urlSegments[processingStartIndex + 1].ToLower(), httpListenerRequest, ResponseString);
 
             return result;
         }
