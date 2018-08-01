@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: simple-http-server
-        image: milowical/simple_http_server
+        image: milowical/simplehttpserver
         ports:
         - containerPort: 80
         resources:
@@ -30,7 +30,7 @@ kind: Service
 metadata:
   name: simple-http-server
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - protocol: TCP
     port: 80
