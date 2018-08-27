@@ -1,1 +1,40 @@
-
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: simple-http-server
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        app: simple-http-server
+    spec:
+      containers:
+      - name: simple-http-server
+        image: milowical/simplehttpserver
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-http-server
+spec:
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30000
+  selector:
+    app: simple-http-server
