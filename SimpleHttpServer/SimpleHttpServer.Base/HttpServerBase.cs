@@ -13,12 +13,25 @@
 
     public abstract class HttpServerBase
     {
-        private const int Port = 80;
+        public const int DefaultPort = 80;
+
+        private int _port;
+
+        protected HttpServerBase() : this(DefaultPort)
+        { }
+
+        protected HttpServerBase(int port)
+        {
+            if (port < 0)
+                throw new ArgumentException("Port cannot be less than 1.", nameof(port));
+
+            _port = port;
+        }
 
         public void Serve()
         {
             var server = new HttpListener();
-            server.Prefixes.Add($"http://*:{Port}/");
+            server.Prefixes.Add($"http://*:{_port}/");
             //server.Prefixes.Add($"http://{Environment.MachineName}:{Port}/");
             //server.Prefixes.Add($"http://localhost:{Port}/");
             //AddLocalIpAddresses(server.Prefixes);
@@ -60,12 +73,12 @@
             }
         }
 
-        private static void AddLocalIpAddresses(HttpListenerPrefixCollection prefixes)
+        private void AddLocalIpAddresses(HttpListenerPrefixCollection prefixes)
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
 
             foreach (var ip in host.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork))
-                prefixes.Add($"http://{ip}:{Port}/");
+                prefixes.Add($"http://{ip}:{_port}/");
         }
 
         protected static void WriteToConsole(HttpListenerRequest httpListenerRequest)

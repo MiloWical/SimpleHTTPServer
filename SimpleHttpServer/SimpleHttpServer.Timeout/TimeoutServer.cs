@@ -18,10 +18,16 @@
 
         public TimeSpan Timeout { get; }
 
-        public TimeoutServer() : this(DefaultTimeSpan)
+        public TimeoutServer() : this(DefaultPort, DefaultTimeSpan)
         { }
 
-        public TimeoutServer(TimeSpan timeout)
+        public TimeoutServer(int port) : this(port, DefaultTimeSpan)
+        { }
+
+        public TimeoutServer(TimeSpan timeout) : this(DefaultPort, timeout)
+        { }
+
+        public TimeoutServer(int port, TimeSpan timeout) : base(port)
         {
             Timeout = timeout;
 
