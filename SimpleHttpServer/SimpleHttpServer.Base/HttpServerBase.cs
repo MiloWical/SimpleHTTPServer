@@ -68,6 +68,34 @@
                 prefixes.Add($"http://{ip}:{Port}/");
         }
 
+        protected static void WriteToConsole(HttpListenerRequest httpListenerRequest)
+        {
+            Console.WriteLine("Request:\n--------");
+
+            using (var inStreamReader = new StreamReader(httpListenerRequest.InputStream))
+            {
+                Console.WriteLine(httpListenerRequest.HttpMethod + " " + httpListenerRequest.RawUrl);
+
+                foreach (var header in httpListenerRequest.Headers.AllKeys)
+                {
+                    var values = httpListenerRequest.Headers.GetValues(header);
+
+                    if (values == null || values.Length <= 0) continue;
+
+                    Console.Write(header + ": ");
+
+                    for (var i = 0; i < values.Length - 1; i++) Console.Write(values[i] + ";");
+
+                    Console.Write(values[values.Length - 1]);
+
+                    Console.WriteLine();
+                }
+
+                Console.WriteLine("\n");
+                Console.WriteLine(inStreamReader.ReadToEnd());
+            }
+        }
+
         protected abstract string ProcessRequest(HttpListenerRequest httpListenerRequest);
     }
 }

@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleHttpServer.Base", "Si
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleHttpServer.Static", "SimpleHttpServer.Static\SimpleHttpServer.Static.csproj", "{4CDBCABE-F4C2-4F95-A514-BE5CFC300589}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleHttpServer.Static.Metric", "SimpleHttpServer.Static.Metric\SimpleHttpServer.Static.Metric.csproj", "{2EFDCE6A-A50D-4817-B347-FAA13F13EDA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleHttpServer.Static.Metric", "SimpleHttpServer.Static.Metric\SimpleHttpServer.Static.Metric.csproj", "{2EFDCE6A-A50D-4817-B347-FAA13F13EDA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleHttpServer.Timeout", "SimpleHttpServer.Timeout\SimpleHttpServer.Timeout.csproj", "{3FADA803-01A9-4341-B415-890571272164}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{2EFDCE6A-A50D-4817-B347-FAA13F13EDA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EFDCE6A-A50D-4817-B347-FAA13F13EDA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EFDCE6A-A50D-4817-B347-FAA13F13EDA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FADA803-01A9-4341-B415-890571272164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FADA803-01A9-4341-B415-890571272164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FADA803-01A9-4341-B415-890571272164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FADA803-01A9-4341-B415-890571272164}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
