@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
-    <AssemblyName>httpd</AssemblyName>
+    <AssemblyName>file_httpd</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
