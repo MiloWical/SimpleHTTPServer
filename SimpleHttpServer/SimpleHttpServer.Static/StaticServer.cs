@@ -11,7 +11,7 @@
         private const string ToggleLoggingOperation = "toggleLogging";
 
         private bool _logToConsole;
-        
+
         protected const string ResponseString = "<HTML><BODY>Transaction Successful.</BODY></HTML>";
 
         public StaticServer()
@@ -26,23 +26,34 @@
             _logToConsole = true;
         }
 
-        protected override string ProcessRequest(HttpListenerRequest httpListenerRequest)
+        protected override ProcessRequestResponse ProcessRequest(HttpListenerRequest httpListenerRequest)
         {
             if (_logToConsole)
                 WriteToConsole(httpListenerRequest);
 
-            if (httpListenerRequest.HttpMethod != HttpMethod.Get.Method) return ResponseString;
-
+            if (httpListenerRequest.HttpMethod != HttpMethod.Get.Method) return new()
+            {
+                Body = ResponseString
+            };
 
             var urlSegments = httpListenerRequest.RawUrl.Split('/');
             var processingStartIndex = GetFirstValidSegmentIndexFromUrlSegments(urlSegments);
 
             if (processingStartIndex == InvalidOperationIndex)
-                return ResponseString;
+                return new()
+                {
+                    Body = ResponseString
+                };
 
-            return urlSegments[processingStartIndex].ToLower() == OperationProcessor.OperationString 
-                ? _operationProcessor.ProcessOperation(urlSegments[processingStartIndex + 1], httpListenerRequest, ResponseString) 
+            var responseBody = urlSegments[processingStartIndex].Equals(OperationProcessor.OperationString, System.StringComparison.OrdinalIgnoreCase)
+                ? _operationProcessor.ProcessOperation(urlSegments[processingStartIndex + 1], httpListenerRequest, ResponseString)
                 : ResponseString;
+
+            return new()
+            {
+                Body = responseBody
+            };
+
         }
 
         protected virtual int GetFirstValidSegmentIndexFromUrlSegments(string[] segments)

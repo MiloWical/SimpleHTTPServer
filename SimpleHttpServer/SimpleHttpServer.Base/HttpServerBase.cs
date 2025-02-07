@@ -52,14 +52,15 @@
                 {
                     var context = server.GetContext();
 
-                    var responseString = ProcessRequest(context.Request);
+                    var processRequestResponse = ProcessRequest(context.Request);
 
-                    Console.WriteLine("\n\nSending Response:\n-----------------\n" + responseString + "\n");
+                    Console.WriteLine("\n\nSending Response:\n-----------------\n" + processRequestResponse.Body + "\n");
 
                     var response = context.Response;
 
-                    var buffer = Encoding.UTF8.GetBytes(responseString);
+                    var buffer = Encoding.UTF8.GetBytes(processRequestResponse.Body);
                     response.ContentLength64 = buffer.Length;
+                    response.StatusCode = (int)processRequestResponse.StatusCode;
                     var output = response.OutputStream;
                     output.Write(buffer, 0, buffer.Length);
                     output.Close();
@@ -109,6 +110,6 @@
             }
         }
 
-        protected abstract string ProcessRequest(HttpListenerRequest httpListenerRequest);
+        protected abstract ProcessRequestResponse ProcessRequest(HttpListenerRequest httpListenerRequest);
     }
 }

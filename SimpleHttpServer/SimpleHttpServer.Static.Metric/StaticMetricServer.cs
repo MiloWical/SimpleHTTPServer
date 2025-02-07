@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using System.Net;
+    using SimpleHttpServer.Base;
 
     public class StaticMetricServer : StaticServer
     {
@@ -36,7 +37,7 @@
             base.Serve();
         }
 
-        protected override string ProcessRequest(HttpListenerRequest httpListenerRequest)
+        protected override ProcessRequestResponse ProcessRequest(HttpListenerRequest httpListenerRequest)
         {
             _totalRequests++;
 

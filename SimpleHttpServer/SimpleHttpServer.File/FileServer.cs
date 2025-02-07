@@ -22,7 +22,7 @@ public class FileServer : HttpServerBase
         Console.WriteLine("Base Directory: " + _baseDir);
     }
 
-    protected override string ProcessRequest(HttpListenerRequest httpListenerRequest)
+    protected override ProcessRequestResponse ProcessRequest(HttpListenerRequest httpListenerRequest)
   {
     var file = _baseDir + httpListenerRequest.RawUrl;
 
@@ -30,11 +30,18 @@ public class FileServer : HttpServerBase
 
     if(!System.IO.File.Exists(file))
     {
-      return "Not Found";
+      return new()
+      {
+        Body = "Not Found",
+        StatusCode = HttpStatusCode.NotFound
+      };
     }
 
     // For now, we'll ignore the method and just return the file contents.
 
-    return System.IO.File.ReadAllText(file);
+    return new()
+    {
+      Body = System.IO.File.ReadAllText(file)
+    };
   }
 }

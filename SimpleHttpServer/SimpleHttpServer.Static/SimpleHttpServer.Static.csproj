@@ -1,11 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
-    <!-- <RuntimeIdentifier>win-x64</RuntimeIdentifier> -->
-    <RuntimeIdentifier>osx-arm64</RuntimeIdentifier>
     <ApplicationIcon />
     <AssemblyName>static_httpd</AssemblyName>
     <OutputType>Exe</OutputType>
